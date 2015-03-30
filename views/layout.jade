@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title= title
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge, chrome=1')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+    link(rel='stylesheet', href='/css/app.styles.min.css')
+  body
+    nav.navabar.navbar-default(role='navigation')
+      .container
+        ul.nav.navbar-nav.navbar-right
+          //li
+          //  a(href='/') Baz noclegowa
+          //li
+          //  a(href='/#kontakt') Kontakt
+    block content
+    footer
+      .container
+        .row
+          .col-xs-12
+            p Wszelkie prawa zastrzeżone <b>Noclegi Pracownicze</b>, Leśna 22 Brzeźno, Konin tel. 791 781 646
+    if settings.env == 'development'
+      script(src='http://localhost:35729/livereload.js')
+    script(src='/js/app.min.js')
