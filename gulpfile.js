@@ -37,26 +37,15 @@ gulp.task('lintclient', function() {
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
-// Uglify the client/frontend javascript files
-gulp.task('uglify', function() {
+gulp.task('buildJs', function() {
   gulp
-    .src(paths.client)
-    .pipe(uglify())
-    .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest('./public/js'))
-});
-
-// Concat the built javascript files from the uglify task with the vendor/lib javascript files into one file
-// Let's save the users some bandwith
-gulp.task('concatJs', function() {
-  gulp
-    .src([
+    .src(paths.client.concat([
       './public/vendor/jquery/dist/jquery.min.js',
-      './public/vendor/bootstrap/dist/js/bootstrap.min.js',
-      './public/js/main.min.js'
-    ])
+      './public/vendor/bootstrap/dist/js/bootstrap.min.js'
+    ]))
+    .pipe(uglify())
     .pipe(concat('app.min.js'))
-    .pipe(gulp.dest('./public/js'));
+    .pipe(gulp.dest('./public/js'))
 });
 
 
@@ -76,7 +65,7 @@ gulp.task('buildCss', function() {
 // Watch the various files and runs their respective tasks
 gulp.task('watch', function() {
   gulp.watch(paths.server, ['lintserver']);
-  gulp.watch(paths.client, ['lintclient']);
+  gulp.watch(paths.client, ['lintclient', 'buildJs']);
   gulp.watch(['./public/stylus/**/*.styl'], ['buildCss']);
   gulp
     .src(['./views/**/*.jade', './public/css/**/*.min.css', './public/js/**/*.min.js'])
@@ -85,5 +74,4 @@ gulp.task('watch', function() {
 });
 
 gulp.task('lint', ['lintserver', 'lintclient']);
-gulp.task('buildJs', ['uglify', 'concatJs']);
 gulp.task('default', ['lint', 'buildCss', 'buildJs', 'watch']);
