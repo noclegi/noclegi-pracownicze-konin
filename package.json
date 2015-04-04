@@ -1,5 +1,6 @@
 {
   "name": "noclegi-pracownicze-konin",
+  "description" :"Strona internetowa noclegów pracowniczych w okolicach Konina",
   "version": "0.0.0",
   "dependencies": {
     "express": "~3.4.8",

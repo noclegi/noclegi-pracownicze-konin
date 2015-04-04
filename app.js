@@ -4,7 +4,6 @@
 
 var express  = require('express'),
     path     = require('path'),
-    config   = require('./config'),
     routes   = require('./routes');
 
 
@@ -16,7 +15,6 @@ var app = express();
 /**
  * Express configuration.
  */
-app.set('port', config.server.port);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.compress());
@@ -37,6 +35,7 @@ if (app.get('env') === 'development') {
 
 routes(app);
 
-app.listen(app.get('port'), function () {
-  console.log('Express server listening on port ' + app.get('port'));
+var port = process.env.PORT || 3000;
+app.listen(port, function () {
+  console.log('Express server listening on port ' + port);
 });
